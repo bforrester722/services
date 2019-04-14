@@ -51,11 +51,14 @@ const buildCompoundQuery = (ref, query) => {
 };
 // 'subscribe' helper
 // ref can be for entire collection or specific doc
-const getSubscribeRef = (coll, doc) => {
+const getSubscribeRef = (coll, doc, endAt, limit, orderBy, startAt) => {
+	if (doc && (endAt || limit || orderBy || startAt)) {
+		throw new Error('Cannot apply search options to a single document.');
+	}
 	if (doc) {
 		return firestore.collection(coll).doc(doc);
 	}
-	return firestore.collection(coll);
+	return buildCompoundRef({coll, endAt, limit, orderBy, startAt});
 };
 // 'subscribe' and 'querySubscribe' helper
 // calls callback with document data
@@ -205,8 +208,17 @@ const query = async job => {
 // doc optional if you want to subscribe to the entire collection
 // returns a promise that resolves to an 'unsubscribe' function,
 // call unsubscribe to stop getting updates
-const subscribe = ({coll, doc, callback, errorCallback}) => {
-	const ref 				= getSubscribeRef(coll, doc);
+const subscribe = ({
+	coll, 
+	doc, 
+	callback, 
+	errorCallback, 
+	endAt, 
+	limit, 
+	orderBy, 
+	startAt
+}) => {
+	const ref 				= getSubscribeRef(coll, doc, endAt, limit, orderBy, startAt);
 	const unsubscribe = startSubscription(ref, callback, errorCallback);
 	return unsubscribe;
 };
