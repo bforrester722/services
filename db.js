@@ -90,7 +90,7 @@ const startSubscription = (ref, cb, onError) => {
 // in case user uses app on a shared device
 const enablePersistence = async () => {
 	try {
-		await firestore.enablePersistence({experimentalTabSynchronization: true});		
+		await firestore.enablePersistence({synchronizeTabs: true});		
 	}
 	catch (error) {
     if (error.code === 'failed-precondition') {
