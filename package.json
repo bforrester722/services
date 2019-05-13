@@ -1,6 +1,6 @@
 {
   "name": "@spriteful/services",
-  "version": "2.1.5",
+  "version": "2.1.6",
   "description": "simple firebase and web worker interface that uses Comlink RPC library",
   "main": "services.js",
   "scripts": {
