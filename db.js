@@ -1,7 +1,8 @@
 
 // must use module resolution in webpack config and include app.config.js file in root
 // of src folder (ie. resolve: {modules: [path.resolve(__dirname, 'src'), 'node_modules'],})
-import {firebase, firestore} from './firebase.js';
+import {firebase}  from '@spriteful/boot/boot.js';
+import {firestore} from './firestore.js';
 
 
 // Working with Timestamps:
