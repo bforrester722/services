@@ -1,6 +1,6 @@
 {
   "name": "@spriteful/services",
-  "version": "2.1.6",
+  "version": "2.1.7",
   "description": "simple firebase and web worker interface that uses Comlink RPC library",
   "main": "services.js",
   "scripts": {
@@ -18,10 +18,10 @@
   "homepage": "https://github.com/spriteful/services#readme",
   "dependencies": {
     "@firebase/app-types": "^0.4.0",
-    "@firebase/util": "^0.2.15",
+    "@firebase/util": "^0.2.17",
     "@spriteful/boot": "^1.1.0",
-    "@spriteful/worker": "^3.0.2",
+    "@spriteful/worker": "^3.0.3",
     "comlinkjs": "^3.2.0",
-    "firebase": "^6.0.2"
+    "firebase": "^6.0.4"
   }
 }
