@@ -200,6 +200,26 @@ const query = async job => {
 	});
 	return allData;
 };
+// @@@@@@@@ query collection group @@@@@
+	// let museums = db.collectionGroup('landmarks').where('type', '==', 'museum');
+	// museums.get().then(function(querySnapshot) {
+	//   querySnapshot.forEach(function(doc) {
+	//     console.log(doc.id, ' => ', doc.data());
+	//   });
+	// });
+// Before using a collection group query, you must create an index that supports your collection group query.
+// You can create an index through an error message, the console, or the Firebase CLI.
+const getCollGroup = async (coll, field, operator, value) => {
+	const query = await firestore.collectionGroup(coll).where(field, operator, value);
+	const allData  = [];
+	await query.get().then((querySnapshot) => {
+  		querySnapshot.forEach(doc => {
+    		allData.push(doc.data());
+  		});
+  	});
+
+	return allData;
+};
 // @@@@@ subsribe to all doc changes @@@@@
 // var unsubscribe = firestore.collection("cities")
 //     .onSnapshot(function () {});
@@ -298,5 +318,6 @@ export {
 	querySubscribe,
 	set,
 	subscribe,
-	textStartsWithSearch
+	textStartsWithSearch,
+	getCollGroup
 };
