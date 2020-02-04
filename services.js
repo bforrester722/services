@@ -32,7 +32,8 @@ import {
 	querySubscribe,
 	set,
 	subscribe,
-	textStartsWithSearch
+	textStartsWithSearch,
+	getCollGroup
 } from './db.js';
 import * as comlink from 'comlinkjs/comlink.js';
 
@@ -90,6 +91,7 @@ const services = {
 	signOut,
 	subscribe,
 	textStartsWithSearch,
+	getCollGroup
 }; // promises
 
 
