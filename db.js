@@ -287,6 +287,42 @@ const deleteField = async ({coll, doc, field}) => {
 		update({[field]: firebase.firestore.FieldValue.delete()});
 	return `${field} field deleted`;
 };
+
+// @@@@@@@@ saves errors to database @@@@@@
+// user must be signed in to work
+// fired from functions and caught with main-app
+// must have data and func
+// this.fire('save-error', {data: this._order, func: 'app-checkout'})
+const saveError = async (data) => {
+	try {
+	 	let id; // cannot return a val from runTransaction function
+        const {ref} = await firestore.collection('errors').doc('errorId').get();
+    await firestore.runTransaction(async transaction => {
+     	const doc = await transaction.get(ref);      
+      if (!doc.exists) { 
+        console.error('errors/errorId document does not exist!');
+      return;
+      } 
+      const errorId = doc.data().errorId + 1; // cannot return a val from runTransaction function
+      id = errorId.toString();
+      transaction.update(ref, {errorId});
+    });
+    const timestamp = Date.now(); // date is added on client to capture user timezone aware times
+    const errorData = Object.assign(
+      {}, 
+      data,
+      {errorId: id, timestamp}
+    );
+    // awaiting here to fail gracefully
+    await firestore.collection('errors').doc(id).set(errorData);
+    return null;
+	}
+	catch (error) {
+		console.log(error)
+  }
+};
+
+
 // NOT a full-text search solution
 const textStartsWithSearch = ({
 	coll, 
@@ -316,6 +352,7 @@ export {
 	getAll,
 	query,
 	querySubscribe,
+	saveError,
 	set,
 	subscribe,
 	textStartsWithSearch,
